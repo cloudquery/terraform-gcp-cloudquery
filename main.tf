@@ -1,7 +1,7 @@
 
 # google_client_config and kubernetes provider must be explicitly specified like the following.
-// Alot is taken from this example:
-// https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/blob/master/examples/simple_autopilot_public/main.tf
+# Alot is taken from this example:
+# https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/blob/master/examples/simple_autopilot_public/main.tf
 
 locals {
   network_name           = "${var.name}-network"
@@ -9,20 +9,20 @@ locals {
   master_auth_subnetwork = "${var.name}-public-master-subnet"
   pods_range_name        = "${var.name}-ip-range-pods-public"
   svc_range_name         = "${var.name}-ip-range-svc-public"
-  subnet_names           = [for subnet_self_link in module.gcp-network.subnets_self_links : split("/", subnet_self_link)[length(split("/", subnet_self_link)) - 1]]
+  subnet_names           = [for subnet_self_link in module.gcp_network.subnets_self_links : split("/", subnet_self_link)[length(split("/", subnet_self_link)) - 1]]
 }
 
 data "google_client_config" "default" {}
 
 resource "random_string" "pg_suffix" {
-  length           = 4
-  special          = false
-  upper = false
+  length  = 4
+  special = false
+  upper   = false
 }
 
-// Services
+# Services
 module "project_services" {
-  source  = "terraform-google-modules/project-factory/google//modules/project_services"
+  source = "terraform-google-modules/project-factory/google//modules/project_services"
   # version = "~> 13.0"
 
   project_id                  = var.project_id
@@ -36,7 +36,7 @@ module "project_services" {
   ]
 }
 
-module "gcp-network" {
+module "gcp_network" {
   source  = "terraform-google-modules/network/google"
   version = ">= 4.0.1, < 5.0.0"
 
@@ -71,7 +71,7 @@ module "gcp-network" {
 }
 
 
-// GKE Cluster
+# GKE Cluster
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-autopilot-public-cluster"
   version = "~> 20.0"
@@ -84,10 +84,10 @@ module "gke" {
   regional           = true
   kubernetes_version = var.gke_version
 
-  network           = module.gcp-network.network_name
-  subnetwork                      = local.subnet_names[index(module.gcp-network.subnets_names, local.subnet_name)]
-  ip_range_pods                   = local.pods_range_name
-  ip_range_services               = local.svc_range_name
+  network           = module.gcp_network.network_name
+  subnetwork        = local.subnet_names[index(module.gcp_network.subnets_names, local.subnet_name)]
+  ip_range_pods     = local.pods_range_name
+  ip_range_services = local.svc_range_name
 
   issue_client_certificate = true
 
@@ -99,7 +99,7 @@ module "gke" {
 
 resource "google_secret_manager_secret" "cloudquery" {
   secret_id = "${var.name}-secret"
-  project = var.project_id
+  project   = var.project_id
 
   replication {
     automatic = true
@@ -113,41 +113,41 @@ resource "google_secret_manager_secret_version" "cloudquery" {
 }
 
 
-module "private-service-access" {
+module "private_service_access" {
   source      = "GoogleCloudPlatform/sql-db/google//modules/private_service_access"
   project_id  = var.project_id
-  vpc_network = module.gcp-network.network_name
+  vpc_network = module.gcp_network.network_name
 }
 
 module "postgresql" {
-  source               = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  name                 = "${var.name}-${random_string.pg_suffix.result}"
-  database_version     = "POSTGRES_14"
-  project_id           = var.project_id
-  zone                 = "${var.region}-c"
-  region               = var.region
-  tier                 = "db-custom-1-3840"
+  source           = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
+  name             = "${var.name}-${random_string.pg_suffix.result}"
+  database_version = "POSTGRES_14"
+  project_id       = var.project_id
+  zone             = "${var.region}-c"
+  region           = var.region
+  tier             = "db-custom-1-3840"
 
   deletion_protection = false
 
-  ip_configuration = {  
+  ip_configuration = {
     ipv4_enabled        = true
-    private_network     = module.gcp-network.network_self_link
+    private_network     = module.gcp_network.network_self_link
     require_ssl         = false
     authorized_networks = []
-    allocated_ip_range = module.private-service-access.google_compute_global_address_name
+    allocated_ip_range  = module.private_service_access.google_compute_global_address_name
   }
 
 }
 
 
-// allow list and read
+# allow list and read
 data "google_service_account" "gke_sa" {
   account_id = module.gke.service_account
 }
 
 resource "google_project_iam_binding" "project" {
-  project = var.project
+  project = var.project_id
   role    = "roles/viewer"
 
   members = [
@@ -165,6 +165,6 @@ resource "google_service_account_iam_binding" "workload_identity_user" {
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "serviceAccount:${var.project}.svc.id.goog[${var.namespace}/${var.name}]",
+    "serviceAccount:${var.project_id}.svc.id.goog[cloudquery/${var.name}]",
   ]
 }

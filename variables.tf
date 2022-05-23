@@ -16,14 +16,11 @@ variable "region" {
 }
 
 variable "gke_version" {
-  description = "Version of GKE to use for the GitLab cluster"
+  type        = string
+  description = "Version` of GKE to use for the GitLab cluster"
   default     = "1.21"
 }
 
-variable "gke_machine_type" {
-  description = "Machine type used for the node-pool"
-  default     = "n1-standard-4"
-}
 
 # variable "tags" {
 #   description = "A map of tags to use on all resources"

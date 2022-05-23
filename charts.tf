@@ -3,11 +3,11 @@
 # # }
 
 module "gke_auth" {
-  source  = "terraform-google-modules/kubernetes-engine/google//modules/auth"
+  source = "terraform-google-modules/kubernetes-engine/google//modules/auth"
   # version = "~> 10.0"
 
   # project_id   = module.project_services.project_id
-  project_id = var.project_id
+  project_id   = var.project_id
   cluster_name = module.gke.name
   location     = module.gke.location
 
@@ -52,8 +52,8 @@ envRenderSecret:
 config: |
   ${indent(2, file(var.config_file))}
 EOT
-    # ,
-    # var.chart_values
+    ,
+    var.chart_values
   ]
 
   # depends_on = [
