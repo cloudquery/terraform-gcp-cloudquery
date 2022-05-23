@@ -37,3 +37,5 @@ DockerfileTmp*
 # CloudQuery
 .cq
 cloudquery.log
+
+.vscode

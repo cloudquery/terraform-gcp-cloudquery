@@ -38,7 +38,7 @@ module "project_services" {
 
 module "gcp_network" {
   source  = "terraform-google-modules/network/google"
-  version = ">= 4.0.1, < 5.0.0"
+  version = "~> 4.0"
 
   project_id   = var.project_id
   network_name = local.network_name
@@ -117,6 +117,7 @@ module "private_service_access" {
   source      = "GoogleCloudPlatform/sql-db/google//modules/private_service_access"
   project_id  = var.project_id
   vpc_network = module.gcp_network.network_name
+  depends_on = [module.gcp_network]
 }
 
 module "postgresql" {
@@ -137,7 +138,10 @@ module "postgresql" {
     authorized_networks = []
     allocated_ip_range  = module.private_service_access.google_compute_global_address_name
   }
-
+  depends_on = [
+    module.gcp_network,
+    module.private_service_access,
+  ]
 }
 
 
