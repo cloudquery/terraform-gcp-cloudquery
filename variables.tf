@@ -1,0 +1,89 @@
+variable "name" {
+  description = "Name to use on all resources created (VPC, RDS, etc)"
+  type        = string
+  default     = "cloudquery"
+}
+
+variable "project_id" {
+  description = "The ID of the project in which resources will be provisioned."
+  type        = string
+}
+
+variable "region" {
+  type        = string
+  description = "The region to host the cluster in (optional if zonal cluster / required if regional)"
+  default     = "us-east1"
+}
+
+variable "gke_version" {
+  description = "Version of GKE to use for the GitLab cluster"
+  default     = "1.21"
+}
+
+variable "gke_machine_type" {
+  description = "Machine type used for the node-pool"
+  default     = "n1-standard-4"
+}
+
+# variable "tags" {
+#   description = "A map of tags to use on all resources"
+#   type        = map(string)
+#   default     = {}
+# }
+
+# # Helm
+
+variable "install_helm_chart" {
+  description = "Enable/Disable helm chart installation"
+  type        = bool
+  default     = true
+}
+
+variable "chart_version" {
+  description = "The version of CloudQuery helm chart"
+  type        = string
+  default     = "0.2.1"
+}
+
+variable "config_file" {
+  description = "Path to the CloudQuery config.hcl"
+  type        = string
+  default     = ""
+}
+
+variable "chart_values" {
+  description = "Variables to pass to the helm chart"
+  type        = string
+  default     = ""
+}
+
+
+# # VPC
+# variable "vpc_id" {
+#   description = "ID of an existing VPC where resources will be created"
+#   type        = string
+#   default     = null
+# }
+
+# variable "public_subnet_ids" {
+#   description = "A list of IDs of existing public subnets inside the VPC"
+#   type        = list(string)
+#   default     = []
+# }
+
+# variable "database_subnet_group" {
+#   description = "If vpc_id is specified, path the subnet_group name where the RDS should reside"
+#   type        = string
+#   default     = ""
+# }
+
+
+# # EKS
+# # role_policy_arns
+# variable "role_policy_arns" {
+#   description = "Policies for the role to use for the EKS service account"
+#   type        = list(string)
+#   default = [
+#     "arn:aws:iam::aws:policy/ReadOnlyAccess"
+#   ]
+# }
