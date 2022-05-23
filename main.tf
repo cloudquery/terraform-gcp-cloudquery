@@ -117,7 +117,7 @@ module "private_service_access" {
   source      = "GoogleCloudPlatform/sql-db/google//modules/private_service_access"
   project_id  = var.project_id
   vpc_network = module.gcp_network.network_name
-  depends_on = [module.gcp_network]
+  depends_on  = [module.gcp_network]
 }
 
 module "postgresql" {
