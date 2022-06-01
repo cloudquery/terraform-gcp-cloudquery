@@ -18,7 +18,7 @@ variable "region" {
 variable "zones" {
   type        = list(string)
   description = "The zone to host the cluster in (required if is a zonal cluster), by default will pick one of the zones in the region"
-  default = []
+  default     = []
 }
 
 variable "gke_version" {

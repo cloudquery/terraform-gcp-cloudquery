@@ -10,7 +10,7 @@ locals {
   pods_range_name        = "${var.name}-ip-range-pods-public"
   svc_range_name         = "${var.name}-ip-range-svc-public"
   subnet_names           = [for subnet_self_link in module.gcp_network.subnets_self_links : split("/", subnet_self_link)[length(split("/", subnet_self_link)) - 1]]
-  zones = length(var.zones) > 0 ? var.zones : [data.google_compute_zones.available.names[0]]
+  zones                  = length(var.zones) > 0 ? var.zones : [data.google_compute_zones.available.names[0]]
 }
 
 data "google_client_config" "default" {}
@@ -95,7 +95,7 @@ module "gke" {
   name               = var.name
   region             = var.region
   regional           = false
-  zones             = local.zones
+  zones              = local.zones
   kubernetes_version = var.gke_version
 
   network           = module.gcp_network.network_name
@@ -111,14 +111,14 @@ module "gke" {
 
   node_pools = [
     {
-      name            = "pool-01"
-      machine_type    = var.machine_type
-      min_count       = 1
-      max_count       = 2
-      preemptible = true
+      name         = "pool-01"
+      machine_type = var.machine_type
+      min_count    = 1
+      max_count    = 2
+      preemptible  = true
       disk_size_gb = 50
       # service_account = var.compute_engine_service_account
-      auto_upgrade    = true
+      auto_upgrade = true
     }
   ]
   depends_on = [
@@ -146,10 +146,10 @@ resource "google_secret_manager_secret_version" "cloudquery" {
 }
 
 data "google_secret_manager_secret_version" "cloudquery" {
- secret = google_secret_manager_secret.cloudquery.id
- depends_on = [
-   google_secret_manager_secret_version.cloudquery
- ]
+  secret = google_secret_manager_secret.cloudquery.id
+  depends_on = [
+    google_secret_manager_secret_version.cloudquery
+  ]
 }
 
 
@@ -162,8 +162,8 @@ module "private_service_access" {
 }
 
 data "google_compute_zones" "available" {
-  project   = var.project_id
-  region = var.region
+  project = var.project_id
+  region  = var.region
   depends_on = [
     module.project_services,
   ]
@@ -179,8 +179,8 @@ module "postgresql" {
   tier             = "db-custom-1-3840"
 
   deletion_protection = false
-  user_name = "cloudquery"
-  user_password = random_password.sql.result
+  user_name           = "cloudquery"
+  user_password       = random_password.sql.result
 
   ip_configuration = {
     ipv4_enabled        = true
