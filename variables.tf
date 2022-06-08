@@ -33,18 +33,18 @@ variable "machine_type" {
   default     = "n2-highcpu-4"
 }
 
-variable "publicly_accessible" {
-  description = "Make Cloud SQL publicly accessible (might be needed if you want to connect to it from Grafana, Preset or other tools)."
-  type        = bool
-  default     = false
-}
+# variable "publicly_accessible" {
+#   description = "Make Cloud SQL publicly accessible (might be needed if you want to connect to it from Grafana, Preset or other tools)."
+#   type        = bool
+#   default     = false
+# }
 
 variable "authorized_networks" {
   description = "If Cloud SQL accessible it is highly advised to specify allowed cidrs from where you are planning to connect"
   type        = list(map(string))
   default     = []
-  // For public use
-  // [{name = "public", value = "0.0.0.0/0"}]
+  # For public use
+  # [{name = "public", value = "0.0.0.0/0"}]
 }
 
 # variable "tags" {

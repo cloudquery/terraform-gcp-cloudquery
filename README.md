@@ -83,7 +83,6 @@ module "cloudquery" {
 | <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | Machine type to use for the cluster | `string` | `"n2-highcpu-4"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name to use on all resources created (VPC, RDS, etc) | `string` | `"cloudquery"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project in which resources will be provisioned. | `string` | n/a | yes |
-| <a name="input_publicly_accessible"></a> [publicly\_accessible](#input\_publicly\_accessible) | Make Cloud SQL publicly accessible (might be needed if you want to connect to it from Grafana, Preset or other tools). | `bool` | `false` | no |
 | <a name="input_region"></a> [region](#input\_region) | The region to host the cluster in (optional if zonal cluster / required if regional) | `string` | `"us-east1"` | no |
 | <a name="input_zones"></a> [zones](#input\_zones) | The zone to host the cluster in (required if is a zonal cluster), by default will pick one of the zones in the region | `list(string)` | `[]` | no |
 
