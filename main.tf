@@ -13,7 +13,7 @@ locals {
   zones                  = length(var.zones) > 0 ? var.zones : [data.google_compute_zones.available.names[0]]
 }
 
-data "google_client_config" "default" {}
+# data "google_client_config" "default" {}
 
 resource "random_password" "sql" {
   length  = 14

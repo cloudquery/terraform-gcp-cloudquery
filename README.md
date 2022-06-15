@@ -32,7 +32,6 @@ module "cloudquery" {
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.21 |
 | <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 4.21 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.5 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.11 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.1 |
 
 ## Providers
@@ -65,7 +64,6 @@ module "cloudquery" {
 | [helm_release.cloudquery](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [random_password.sql](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_string.pg_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
-| [google_client_config.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
 | [google_compute_zones.available](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_zones) | data source |
 | [google_secret_manager_secret_version.cloudquery](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/secret_manager_secret_version) | data source |
 | [google_service_account.gke_sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/service_account) | data source |
@@ -91,7 +89,7 @@ module "cloudquery" {
 No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-## Troubleshooting
+## Troubleshooting and Known Issues
 
 If helm installtion is stuck in some hanging state you can run the following commands:
 
