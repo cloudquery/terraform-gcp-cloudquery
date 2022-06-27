@@ -74,7 +74,7 @@ module "cloudquery" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_authorized_networks"></a> [authorized\_networks](#input\_authorized\_networks) | If Cloud SQL accessible it is highly advised to specify allowed cidrs from where you are planning to connect | `list(map(string))` | `[]` | no |
 | <a name="input_chart_values"></a> [chart\_values](#input\_chart\_values) | Variables to pass to the helm chart | `string` | `""` | no |
-| <a name="input_chart_version"></a> [chart\_version](#input\_chart\_version) | The version of CloudQuery helm chart | `string` | `"0.2.6"` | no |
+| <a name="input_chart_version"></a> [chart\_version](#input\_chart\_version) | The version of CloudQuery helm chart | `string` | `"0.2.7"` | no |
 | <a name="input_config_file"></a> [config\_file](#input\_config\_file) | Path to the CloudQuery config.hcl | `string` | `""` | no |
 | <a name="input_gke_version"></a> [gke\_version](#input\_gke\_version) | Version` of GKE to use for the GitLab cluster` | `string` | `"1.21"` | no |
 | <a name="input_install_helm_chart"></a> [install\_helm\_chart](#input\_install\_helm\_chart) | Enable/Disable helm chart installation | `bool` | `true` | no |
