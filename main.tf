@@ -87,7 +87,7 @@ module "gcp_network" {
 # GKE Cluster
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-public-cluster"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   # Create an implicit dependency on service activation
   project_id = var.project_id
